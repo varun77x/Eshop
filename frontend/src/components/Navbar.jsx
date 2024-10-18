@@ -1,9 +1,104 @@
-import React from 'react'
+import { Link } from "react-router-dom";
+import {  HiOutlineHeart, HiOutlineShoppingCart } from "react-icons/hi2";
+
+
+import avatarImg from "../assets/user.png"
+import loggedAvatarImg from "../assets/loggedAvatar.png"
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useAuth } from "../context/AuthContext";
+
+const navigation = [
+    { name: "Dashboard", href: "/user-dashboard" },
+    { name: "Orders", href: "/orders" },
+    { name: "Cart Page", href: "/cart" },
+    { name: "Check Out", href: "/checkout" },
+]
 
 const Navbar = () => {
-  return (
-    <div>Navbar</div>
-  )
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+    
+
+    const { currentUser, logout } = useAuth()
+
+    const handleLogOut = () => {
+        logout()
+    }
+
+    const token = localStorage.getItem('token');
+
+    return (
+        <header className="max-w-screen-2xl mx-auto px-4 py-6 border-b border-zinc-700">
+            <nav className="flex justify-between items-center ">
+                {/* left side */}
+                <div className="flex items-center md:gap-16 gap-4s">
+                    <Link to="/">
+
+                        <div className="flex items-center gap-4">
+                            <img src='/fav-icon.svg' alt="Book Store Icon" className="w-8 h-8" />
+                            <span className="text-2xl font-bold text-gray-900">BOOK-STORE</span>
+                        </div>
+                    </Link>
+
+
+                </div>
+
+
+
+                {/* rigth side */}
+                <div className="relative flex items-center md:space-x-3 space-x-2">
+                    <div >
+                        {
+                            currentUser ? <>
+                                <button onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                                    <img src={loggedAvatarImg} alt="" className={`size-7 rounded-full ${currentUser ? 'ring-2 ring-black' : ''}`} />
+                                </button>
+                                {/* show dropdowns */}
+                                {
+                                    isDropdownOpen && (
+                                        <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md z-40">
+                                            <ul className="py-2">
+                                                {
+                                                    navigation.map((item) => (
+                                                        <li key={item.name} onClick={() => setIsDropdownOpen(false)}>
+                                                            <Link to={item.href} className="block px-4 py-2 text-sm hover:bg-gray-100">
+                                                                {item.name}
+                                                            </Link>
+                                                        </li>
+                                                    ))
+                                                }
+                                                <li>
+                                                    <button
+                                                        onClick={handleLogOut}
+                                                        className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100">Logout</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    )
+                                }
+                            </> : (
+                                <Link to="/login"> 
+                                <img src={avatarImg} className="size-7" alt="hola" />
+                                </Link>
+                            )
+                        }
+                    </div>
+
+                    <button className="hidden sm:block">
+                        <HiOutlineHeart className="size-6" />
+                    </button>
+
+                    <Link to="/cart" className="bg-primary p-1 sm:px-6 px-2 flex items-center rounded-sm">
+                        <HiOutlineShoppingCart className='' />
+                        
+
+
+                    </Link>
+                </div>
+            </nav>
+        </header>
+    )
 }
 
-export default Navbar
+export default Navbar;
