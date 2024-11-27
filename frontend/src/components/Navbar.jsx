@@ -26,7 +26,7 @@ const Navbar = () => {
         logout()
     }
 
-    const token = localStorage.getItem('token'); later stuff
+    // const token = localStorage.getItem('token'); later stuff
 
     return (
         <header className="max-w-screen-2xl mx-auto px-4 py-6 border-b border-zinc-700">
