@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import BookCard from '../books/BookCard';
-
+import { useFetchAllBooksQuery } from '../../redux/features/books/booksApi';
 
 const categories = ["All", "Business", "Fiction", "Horror", "Adventure"];
 
@@ -9,13 +9,8 @@ const Catalogue = () => {
   const [searchText, setSearchText] = useState("");
   const [rowsToShow, setRowsToShow] = useState(3);
   const [showAll, setShowAll] = useState(false); // State to track if all books are displayed
-  const [books, setBooks] = useState([]);
-  
-  useEffect(() => {
-    fetch(books.json)
-    .then(res=>res.json())
-    .then((data) => setBooks(data));
-  },[]);
+
+  const { data: books = [] } = useFetchAllBooksQuery();
 
   // Filter books based on category and search text
   const filteredBooks = books.filter(book => {
