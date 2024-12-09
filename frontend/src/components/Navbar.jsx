@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import {  HiOutlineHeart, HiOutlineShoppingCart } from "react-icons/hi2";
+import { HiOutlineHeart, HiOutlineShoppingCart } from "react-icons/hi2";
 
 
 import avatarImg from "../assets/user.png"
@@ -26,12 +26,11 @@ const Navbar = () => {
         logout()
     }
 
-    // const token = localStorage.getItem('token'); later stuff
+    const token = localStorage.getItem('token');
 
     return (
         <header className="max-w-screen-2xl mx-auto px-4 py-6 border-b border-zinc-700">
             <nav className="flex justify-between items-center ">
-                {/* left side */}
                 <div className="flex items-center md:gap-16 gap-4s">
                     <Link to="/">
 
@@ -45,8 +44,6 @@ const Navbar = () => {
                 </div>
 
 
-
-                {/* rigth side */}
                 <div className="relative flex items-center md:space-x-3 space-x-2">
                     <div >
                         {
@@ -77,9 +74,10 @@ const Navbar = () => {
                                         </div>
                                     )
                                 }
-                            </> : (
+                            </> : token ? <Link to="/dashboard" className='border-b-2 border-primary'>Dashboard</Link> : (
                                 <Link to="/login"> 
                                 <img src={avatarImg} className="size-7" alt="hola" />
+                                {/* <HiOutlineUser className="size-6" /> */}
                                 </Link>
                             )
                         }

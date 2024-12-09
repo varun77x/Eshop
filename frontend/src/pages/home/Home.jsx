@@ -6,8 +6,8 @@ import Banner from './Banner'
 const Home = () => {
   return (
     <>
-    <Banner/>
-    <Recommened />
+      <Banner />
+      <Recommened />
       <Catalogue />
     </>
   )
